@@ -11,6 +11,11 @@ class Employee {
 	private $title;
 	private $avatar;
 
+	public function __construct()
+    {
+        $this->avatar = url('/').'/img/avatar.png';
+    }
+
 	public function setUuid($uuid)
 	{
 		$this->uuid = $uuid;

@@ -14,8 +14,7 @@ class EmployeeMapper implements MapperInterface {
 			'company',
 			'bio',
 			'name',
-			'title',
-			'avatar'
+			'title'
 		];
 	}
 
@@ -24,9 +23,12 @@ class EmployeeMapper implements MapperInterface {
 		$employee = new Employee();
 
 		foreach ($data as $key => $value) {
-			
+
 			$methodName = 'set' . ucfirst($key);
-			$employee->$methodName($value);
+            if (method_exists($employee, $methodName))
+            {
+                $employee->$methodName($value);
+            }
 		}
 		return $employee;
 	}

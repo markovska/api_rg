@@ -11,20 +11,20 @@ class JsonMapperService
 	{
 		$requiredFields = $mapper->getRequiredFields();
 		$decodedData = json_decode($jsonString, true);
-
 		$results = [];
 		
 		foreach($decodedData as $item) {
 
-			$fieldNames = array_keys($item);
+		    //get only not empty values
+            $items = array_filter($item);
+            $fieldNames = array_keys($items);
 
 			if(count(array_intersect($fieldNames, $requiredFields)) == count($requiredFields)) {
-				$results[] = $mapper->mapResult($item);
+
+				$results[] = $mapper->mapResult($items);
 			}
 			else {
-				$message = 'The filed names do not match with the required field names.';
-				die(view('exceptions', compact('message')));
-				
+			    throw new \Exception('The filed names do not match with the required field names. ');
 			}
 		}
 
